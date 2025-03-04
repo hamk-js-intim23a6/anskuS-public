@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Function Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .container { max-width: 600px; margin: auto; }
+        canvas { border: 1px solid black; width: 100%; height: 300px; }
+        pre { text-align: left; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Function Calculator</h2>
+        <form id="functionForm">
+            <label>Function f(x) return value:</label>
+            <input type="text" id="functionInput" value="x*x" required><br>
+            
+            <label>Start of x range:</label>
+            <input type="number" id="xStart" value="0" required><br>
+            
+            <label>End of x range:</label>
+            <input type="number" id="xEnd" value="100" required><br>
+            
+            <label>X Step:</label>
+            <input type="number" id="xStep" value="1" step="any" required><br>
+            
+            <label>Y Scale Factor:</label>
+            <input type="number" id="yScale" value="1" step="any"><br>
+            
+            <button type="submit">Calculate</button>
+        </form>
+        
+        <canvas id="graphCanvas" width="600" height="300"></canvas>
+        <h4>Function Values:</h4>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        document.getElementById("functionForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            const funcStr = document.getElementById("functionInput").value;
+            const xStart = parseFloat(document.getElementById("xStart").value);
+            const xEnd = parseFloat(document.getElementById("xEnd").value);
+            const xStep = parseFloat(document.getElementById("xStep").value);
+            const yScale = parseFloat(document.getElementById("yScale").value) || 1;
+            
+            let xValues = [];
+            let yValues = [];
+            let outputText = "";
+            
+            try {
+                for (let x = xStart; x <= xEnd; x += xStep) {
+                    let y = new Function("x", `with(Math) { return ${funcStr}; }`)(x) * yScale;
+                    xValues.push(x);
+                    yValues.push(y);
+                    outputText += `f(${x.toFixed(2)}) = ${y.toFixed(2)}\n`;
+                }
+                document.getElementById("output").textContent = outputText;
+                drawGraph(xValues, yValues);
+            } catch (error) {
+                document.getElementById("output").textContent = "Invalid function! Please enter a correct mathematical expression.";
+            }
+        });
+
+        function drawGraph(xValues, yValues) {
+            const canvas = document.getElementById("graphCanvas");
+            const ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const padding = 20;
+            const width = canvas.width - 2 * padding;
+            const height = canvas.height - 2 * padding;
+            const xMin = Math.min(...xValues);
+            const xMax = Math.max(...xValues);
+            const yMin = Math.min(...yValues);
+            const yMax = Math.max(...yValues);
+            
+            function scaleX(x) {
+                return padding + ((x - xMin) / (xMax - xMin)) * width;
+            }
+            
+            function scaleY(y) {
+                return canvas.height - (padding + ((y - yMin) / (yMax - yMin)) * height);
+            }
+            
+            ctx.beginPath();
+            ctx.moveTo(scaleX(xValues[0]), scaleY(yValues[0]));
+            for (let i = 1; i < xValues.length; i++) {
+                ctx.lineTo(scaleX(xValues[i]), scaleY(yValues[i]));
+            }
+            ctx.stroke();
+        }
+    </script>
+</body>
+</html>
+
