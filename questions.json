@@ -1,0 +1,17 @@
+[
+{
+"question": "When was the first Apple iPhone launched in USA?",
+"options": ["2000", "2001", "2007", "2008"],
+"correct": "2007"
+},
+{
+"question": "Who invented World Wide Web (WWW)?",
+"options": ["Barack Obama", "Tim Berners-Lee", "Linus Torvalds"],
+"correct": "Tim Berners-Lee"
+},
+{
+"question": "Which of the following definitions uses block scope in JS?",
+"options": ["x = 5", "var x = 5", "let x = 5"],
+"correct": "let x = 5"
+}
+]
