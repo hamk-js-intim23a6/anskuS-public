@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 Form Handling</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { max-width: 500px; margin: auto; padding: 20px; }
+        label { display: block; margin-top: 10px; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Registration Form</h2>
+        <form id="userForm">
+            <label>Full Name:
+                <input type="text" id="fullName" name="fullName" required autofocus placeholder="Enter full name" maxlength="80" size="60">
+            </label>
+            
+            <label>Password:
+                <input type="password" id="password" name="password" required pattern="[a-zA-Z0-9_,.-:;?!]{8,20}">
+            </label>
+            
+            <label>Confirm Password:
+                <input type="password" id="confirmPassword" name="confirmPassword" required pattern="[a-zA-Z0-9_,.-:;?!]{8,20}">
+            </label>
+            
+            <label>Gender:</label>
+            <input type="radio" name="gender" value="male" required> Male
+            <input type="radio" name="gender" value="female"> Female
+            <input type="radio" name="gender" value="other"> Other
+            
+            <label>Hobbies:</label>
+            <input type="checkbox" name="hobbies" value="games"> Games
+            <input type="checkbox" name="hobbies" value="music"> Music
+            <input type="checkbox" name="hobbies" value="sports"> Sports
+            <input type="checkbox" name="hobbies" value="tv"> TV
+            
+            <label>Birth Date:
+                <input type="date" id="birthDate" name="birthDate">
+            </label>
+            
+            <label>Height (cm):</label>
+            <input type="range" id="height" name="height" min="40" max="300" value="170" oninput="syncHeight()">
+            <input type="number" id="heightValue" min="40" max="300" value="170" oninput="syncHeight()">
+            
+            <label>Favorite Color:
+                <input type="color" id="favoriteColor" name="favoriteColor">
+            </label>
+            
+            <label>Home Country:
+                <select id="country" name="country">
+                    <option value="Finland" selected>Finland</option>
+                    <option value="Sweden">Sweden</option>
+                    <option value="Norway">Norway</option>
+                    <option value="Denmark">Denmark</option>
+                    <option value="Iceland">Iceland</option>
+                    <option value="Estonia">Estonia</option>
+                    <option value="Latvia">Latvia</option>
+                    <option value="Lithuania">Lithuania</option>
+                    <option value="Russia">Russia</option>
+                </select>
+            </label>
+            
+            <label>Profession:
+                <input list="professions" name="profession">
+                <datalist id="professions">
+                    <option value="Teacher">
+                    <option value="Nurse">
+                    <option value="Plumber">
+                    <option value="Bureaucrat">
+                </datalist>
+            </label>
+            
+            <label>Message:
+                <textarea id="message" name="message" required rows="6" cols="60" placeholder="Enter your message..." maxlength="1000"></textarea>
